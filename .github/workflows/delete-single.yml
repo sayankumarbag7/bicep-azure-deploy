@@ -17,6 +17,6 @@ jobs:
       - name: Delete Storage Account
         run: |
           az storage account delete \
-            --name mystorageacct123 \
+            --name mystorageacct123njaecuhn56 \
             --resource-group MyResourceGroup \
             --yes
