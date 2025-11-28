@@ -19,4 +19,4 @@ jobs:
           az deployment group create \
             --resource-group MyResourceGroup \
             --template-file multiResources.bicep \
-            --parameters storageName=mystoragemulti123 appServiceName=myappsvc123
+            --parameters storageName=mystorageacct123njaecuhn563 appServiceName=myappsvc123
