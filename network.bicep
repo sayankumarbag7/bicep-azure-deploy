@@ -1,4 +1,3 @@
-
 param vnetName string
 param vnetAddressPrefix string
 param subnetName string
@@ -25,4 +24,5 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   }
 }
 
-output subnetId string = vnet.properties.subnets[0].id
+// Output subnet ID for VM
+output subnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets', vnet.name, subnetName)

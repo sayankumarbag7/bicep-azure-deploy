@@ -1,16 +1,20 @@
-
 targetScope = 'resourceGroup'
 
+// General parameters
 param location string = resourceGroup().location
 param vnetName string = 'myVnet'
 param vnetAddressPrefix string = '10.0.0.0/16'
 param subnetName string = 'mySubnet'
 param subnetPrefix string = '10.0.0.0/24'
-param vmName string = 'myVM'
-param adminUsername string = 'azureuser'
+
+// VM parameters
+param vmName string
+param adminUsername string
 @secure()
 param adminPassword string
+param vmSize string = 'Standard_B1s' // default VM size
 
+// Deploy network first
 module networkModule 'network.bicep' = {
   name: 'networkDeployment'
   params: {
@@ -22,6 +26,7 @@ module networkModule 'network.bicep' = {
   }
 }
 
+// Deploy VM after network
 module vmModule 'vm.bicep' = {
   name: 'vmDeployment'
   params: {
@@ -30,5 +35,6 @@ module vmModule 'vm.bicep' = {
     adminUsername: adminUsername
     adminPassword: adminPassword
     subnetId: networkModule.outputs.subnetId
+    vmSize: vmSize
   }
 }

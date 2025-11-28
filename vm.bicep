@@ -1,18 +1,20 @@
-
 param vmName string
 param location string
 param adminUsername string
 @secure()
 param adminPassword string
 param subnetId string
+param vmSize string
+
+// VM image settings (Windows Server default)
+param imagePublisher string = 'MicrosoftWindowsServer'
+param imageOffer string = 'WindowsServer'
+param imageSku string = '2022-Datacenter'
 
 var nicName = '${vmName}-nic'
 var ipName = '${vmName}-ip'
-var vmSize = 'Standard_DS1_v2'
-var imagePublisher = 'MicrosoftWindowsServer'
-var imageOffer = 'WindowsServer'
-var imageSku = '2022-Datacenter'
 
+// Public IP
 resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
   name: ipName
   location: location
@@ -21,6 +23,7 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
   }
 }
 
+// Network Interface
 resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: nicName
   location: location
@@ -42,6 +45,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   }
 }
 
+// Virtual Machine
 resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: vmName
   location: location
