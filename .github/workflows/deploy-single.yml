@@ -19,4 +19,4 @@ jobs:
           az deployment group create \
             --resource-group MyResourceGroup \
             --template-file singleResource.bicep \
-            --parameters storageName=mystorageacct123
+            --parameters storageName=mystorageacct123njaecuhn56
