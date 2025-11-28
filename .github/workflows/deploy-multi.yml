@@ -1,0 +1,22 @@
+name: Deploy Multiple Resources
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Multiple Resources
+        run: |
+          az deployment group create \
+            --resource-group MyResourceGroup \
+            --template-file multiResources.bicep \
+            --parameters storageName=mystoragemulti123 appServiceName=myappsvc123

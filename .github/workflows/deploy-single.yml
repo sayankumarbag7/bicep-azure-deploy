@@ -1,0 +1,22 @@
+name: Deploy Single Resource
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Storage Account
+        run: |
+          az deployment group create \
+            --resource-group MyResourceGroup \
+            --template-file singleResource.bicep \
+            --parameters storageName=mystorageacct123

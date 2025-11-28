@@ -1,0 +1,22 @@
+name: Delete Single Resource
+on:
+  workflow_dispatch:
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Delete Storage Account
+        run: |
+          az storage account delete \
+            --name mystorageacct123 \
+            --resource-group MyResourceGroup \
+            --yes
