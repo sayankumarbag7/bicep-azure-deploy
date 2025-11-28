@@ -12,7 +12,7 @@ param vmName string
 param adminUsername string
 @secure()
 param adminPassword string
-param vmSize string = 'Standard_B1s' // default VM size
+param vmSize string = 'Standard_B1ms' 
 
 // Deploy network first
 module networkModule 'network.bicep' = {

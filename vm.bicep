@@ -4,40 +4,18 @@ param adminUsername string
 @secure()
 param adminPassword string
 param subnetId string
-param vmSize string
+param vmSize string = 'Standard_B1ms'
 
-// VM image settings (Windows Server default)
-param imagePublisher string = 'MicrosoftWindowsServer'
-param imageOffer string = 'WindowsServer'
-param imageSku string = '2022-Datacenter'
-
-var nicName = '${vmName}-nic'
-var ipName = '${vmName}-ip'
-
-// Public IP
-resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
-  name: ipName
-  location: location
-  properties: {
-    publicIPAllocationMethod: 'Dynamic'
-  }
-}
-
-// Network Interface
 resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
-  name: nicName
+  name: '${vmName}-nic'
   location: location
   properties: {
     ipConfigurations: [
       {
-        name: 'ipconfig1'
+        name: 'ipConfig1'
         properties: {
           subnet: {
             id: subnetId
-          }
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: publicIP.id
           }
         }
       }
@@ -45,7 +23,6 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   }
 }
 
-// Virtual Machine
 resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: vmName
   location: location
@@ -60,9 +37,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        publisher: imagePublisher
-        offer: imageOffer
-        sku: imageSku
+        publisher: 'Canonical'
+        offer: '0001-com-ubuntu-server-focal'
+        sku: '20_04-lts'
         version: 'latest'
       }
       osDisk: {
