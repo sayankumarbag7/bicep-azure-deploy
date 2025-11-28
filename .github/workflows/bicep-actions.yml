@@ -6,19 +6,20 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Azure Login
+      - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy main.bicep
+      - name: Deploy Bicep to RG
         run: |
           az deployment group create \
-            --resource-group ${{ secrets.AZURE_RG }} \
+            --name deploy1 \
+            --resource-group $AZURE_RG \
             --template-file main.bicep \
             --parameters @main.parameters.json
+
