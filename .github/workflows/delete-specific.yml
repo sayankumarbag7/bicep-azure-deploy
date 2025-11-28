@@ -17,5 +17,5 @@ jobs:
       - name: Delete App Service
         run: |
           az webapp delete \
-            --name myappsvc123 \
+            --name myappsvc123hsgbf7 \
             --resource-group MyResourceGroup
